@@ -28,6 +28,8 @@ def _base_func(dt, unit, base, round):
         raise TypeError('`unit` must be type of `datetime.timedelta`')
     if base is None:
         base = dt.__class__(1970, 1, 1)
+        if type(dt) == datetime:
+            base = base.replace(tzinfo=dt.tzinfo)
     elif type(dt) != type(base):
         raise TypeError('`dt` and `base` must be same types')
     return base + _td_mul(unit, round(_td_div((dt - base), unit)))
@@ -44,8 +46,9 @@ def floor(dt, unit=timedelta(days=1), base=None):
         rounding-down unit. Default is `datetime.timedelta(days=1)`.
     base : datetime.datetime or datetime.date, optional
         base datetime/date object. Default is `None`. If `None`, 
-        `datetime.datetime(1970, 1, 1)`/`datetime.date(1970, 1, 1)` is used for
-        this. This type must be the same as the type of `dt`
+        `datetime.datetime(1970, 1, 1, tzinfo=dt.tzinfo)`/`datetime.date(1970,
+        1, 1)` is used for this. This type must be the same as the type of
+        `dt`.
 
     Returns
     -------
@@ -95,8 +98,9 @@ def ceil(dt, unit=timedelta(days=1), base=None):
         rounding-up unit. Default is `datetime.timedelta(days=1)`.
     base : datetime.datetime or datetime.date, optional
         base datetime/date object. Default is `None`. If `None`, 
-        `datetime.datetime(1970, 1, 1)`/`datetime.date(1970, 1, 1)` is used for
-        this. This type must be the same as the type of `dt`
+        `datetime.datetime(1970, 1, 1, tzinfo=dt.tzinfo)`/`datetime.date(1970,
+        1, 1)` is used for this. This type must be the same as the type of
+        `dt`.
 
     Returns
     -------
@@ -146,8 +150,9 @@ def round(dt, unit=timedelta(days=1), base=None):
         rounding-off unit. Default is `datetime.timedelta(days=1)`.
     base : datetime.datetime or datetime.date, optional
         base datetime/date object. Default is `None`. If `None`, 
-        `datetime.datetime(1970, 1, 1)`/`datetime.date(1970, 1, 1)` is used for
-        this. This type must be the same as the type of `dt`
+        `datetime.datetime(1970, 1, 1, tzinfo=dt.tzinfo)`/`datetime.date(1970,
+        1, 1)` is used for this. This type must be the same as the type of
+        `dt`.
 
     Returns
     -------
