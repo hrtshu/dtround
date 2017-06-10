@@ -32,7 +32,7 @@ def _base_func(dt, unit, base, round):
             base = base.replace(tzinfo=dt.tzinfo)
     elif type(dt) != type(base):
         raise TypeError('`dt` and `base` must be same types')
-    return base + _td_mul(unit, round(_td_div((dt - base), unit)))
+    return base + _td_mul(unit, int(round(_td_div((dt - base), unit))))
 
 def floor(dt, unit=timedelta(days=1), base=None):
     """
